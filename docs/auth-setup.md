@@ -157,5 +157,11 @@ SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_ANON_KEY=your-anon-or-publishable-key
 ```
 
+Each value must be a single line. Do not paste multiple copies of the URL or key into the same Vercel variable. `SUPABASE_URL` should not include `/rest/v1`; use only the base project URL:
+
+```text
+https://your-project-ref.supabase.co
+```
+
 4. Apply them to `Production`, `Preview`, and `Development` as needed.
 5. Redeploy after adding or changing environment variables.

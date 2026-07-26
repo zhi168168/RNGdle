@@ -50,10 +50,17 @@ function renderAnalytics(gaId) {
 `;
 }
 
+function firstEnvLine(value) {
+  return String(value || "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find(Boolean) || "";
+}
+
 function readSupabaseConfig() {
   return {
-    url: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "",
-    anonKey: process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || ""
+    url: firstEnvLine(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""),
+    anonKey: firstEnvLine(process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || "")
   };
 }
 
