@@ -1,0 +1,16 @@
+{
+  "name": "RNGdle",
+  "short_name": "RNGdle",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#0d0d0b",
+  "background_color": "#0d0d0b",
+  "display": "standalone",
+  "start_url": "/"
+}

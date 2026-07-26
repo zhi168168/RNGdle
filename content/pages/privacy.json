@@ -1,0 +1,30 @@
+{
+  "slug": "privacy",
+  "title": "RNGdle Privacy Policy",
+  "description": "Read the RNGdle privacy policy for this static browser game remake.",
+  "schemaType": "Article",
+  "meta": "Reviewed and updated by the RNGdle Editorial Team.",
+  "sections": [
+    {
+      "heading": "Local gameplay data",
+      "paragraphs": [
+        "This static RNGdle remake stores gameplay state in the player's browser using localStorage. The saved data can include today's roll, matched badges, today's EP, and lifetime EP on the current device.",
+        "This data stays in the browser unless the player clears site data or uses the share button to copy or share a roll summary."
+      ]
+    },
+    {
+      "heading": "Accounts and server data",
+      "paragraphs": [
+        "This remake does not create accounts, collect usernames, run a global leaderboard, or upload roll results to a backend service.",
+        "If analytics, ads, accounts, or server storage are added later, this policy should be updated before publishing those changes."
+      ]
+    },
+    {
+      "heading": "Contact",
+      "paragraphs": [
+        "Questions about privacy can be sent to <a data-config=\"contactEmail\"></a>."
+      ]
+    }
+  ],
+  "cta": { "label": "Play RNGdle", "href": "/" }
+}

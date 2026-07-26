@@ -1,0 +1,30 @@
+{
+  "slug": "terms",
+  "title": "RNGdle Terms of Use",
+  "description": "Read the terms of use for this RNGdle static browser game remake.",
+  "schemaType": "Article",
+  "meta": "Reviewed and updated by the RNGdle Editorial Team.",
+  "sections": [
+    {
+      "heading": "Entertainment use",
+      "paragraphs": [
+        "RNGdle is provided as a browser game for entertainment. The numbers, badges, EP values, and rarity labels are game mechanics and should not be interpreted as gambling, financial advice, or a prediction system.",
+        "The static remake is designed for local play and may differ from the live RNGdle service."
+      ]
+    },
+    {
+      "heading": "Fair play",
+      "paragraphs": [
+        "The daily roll is stored locally on the player's device. Clearing browser data can reset local progress, so local scores should be treated as personal play records rather than authoritative competition data.",
+        "Any future online leaderboard or account system would need separate server-side validation and updated terms."
+      ]
+    },
+    {
+      "heading": "Contact",
+      "paragraphs": [
+        "Questions or reports can be sent to <a data-config=\"reportEmail\"></a>."
+      ]
+    }
+  ],
+  "cta": { "label": "Play RNGdle", "href": "/" }
+}

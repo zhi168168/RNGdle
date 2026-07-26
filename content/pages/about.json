@@ -1,0 +1,24 @@
+{
+  "slug": "about",
+  "title": "About RNGdle",
+  "description": "Learn about RNGdle, the daily random number badge game.",
+  "schemaType": "AboutPage",
+  "meta": "Reviewed and updated by the RNGdle Editorial Team.",
+  "sections": [
+    {
+      "heading": "About RNGdle",
+      "paragraphs": [
+        "RNGdle is a compact browser game about making one random number feel meaningful. The game rolls a number, finds numerical patterns, assigns badges, and turns those discoveries into EP.",
+        "This project is a static remake of the core play experience. It focuses on offline-friendly gameplay, local daily progress, badge scoring, and shareable roll summaries."
+      ]
+    },
+    {
+      "heading": "What this remake includes",
+      "paragraphs": [
+        "The remake includes a daily roll, UTC reset countdown, local lifetime EP, rarity tiers, badge families, and a broad set of number-pattern checks.",
+        "It does not include live accounts, server leaderboards, social hearts, claim tokens, or friend feeds."
+      ]
+    }
+  ],
+  "cta": { "label": "Play RNGdle", "href": "/" }
+}

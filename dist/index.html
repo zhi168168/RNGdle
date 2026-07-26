@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RNGdle - Daily Random Number Game</title>
+    <meta name="description" content="Play RNGdle online. Generate one daily number, collect mathematical and meme badges, and score EP from rare digit patterns.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.rngdle.com/">
+    <meta property="og:title" content="RNGdle - Daily Random Number Game">
+    <meta property="og:description" content="Play RNGdle online. Generate one daily number, collect mathematical and meme badges, and score EP from rare digit patterns.">
+    <meta property="og:url" content="https://www.rngdle.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RNGdle">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RNGdle - Daily Random Number Game">
+    <meta name="twitter:description" content="Generate today&#39;s RNGdle number and see which badges it unlocks.">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "RNGdle - Daily Random Number Game",
+        "url": "https://www.rngdle.com/",
+        "dateModified": "2026-07-26",
+        "publisher": {
+          "@type": "Organization",
+          "name": "RNGdle",
+          "url": "https://www.rngdle.com/"
+        },
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "description": "RNGdle is a browser game where each daily random number is analyzed for badges, rarity, and EP.",
+        "creator": {
+          "@type": "Organization",
+          "name": "RNGdle",
+          "url": "https://www.rngdle.com/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="primary-nav" aria-label="primary">
+        <a class="brand-link" href="/">RNGdle</a>
+        <div class="nav-links">
+          <a class="nav-play nav-active" href="/" aria-current="page">Play</a>
+          <a href="/about/">About</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+        </div>
+      </nav>
+    </header>
+    <main class="app-shell">
+      <h1 class="sr-only">RNGdle</h1>
+      <header class="topbar">
+        <p>Generate today&#39;s number and see which badges it unlocks.</p>
+      </header>
+
+      <section class="rngdle-game" aria-label="RNGdle game">
+        <div class="hero-board">
+          <div class="hero-copy">
+            <p class="eyebrow">Daily random number game</p>
+            <p class="game-title">RNGdle</p>
+            <p class="game-subtitle">Generate one number from 0 to 1,000,000, collect pattern badges, and turn rare numerical coincidences into EP.</p>
+          </div>
+
+          <div class="roll-card" aria-label="daily roll panel">
+            <div class="roll-card-top">
+              <div>
+                <span class="micro-label">Today&apos;s number</span>
+                <div class="number-display" id="numberDisplay" aria-live="polite">??????</div>
+              </div>
+              <div class="rarity-pill" id="rarityPill">UNROLLED</div>
+            </div>
+
+            <button class="generate-button" id="generateButton" type="button">GENERATE</button>
+
+            <div class="summary-strip" aria-label="score summary">
+              <div>
+                <span>Roll EP</span>
+                <strong id="rollScore">0</strong>
+              </div>
+              <div>
+                <span>Lifetime EP</span>
+                <strong id="lifetimeScore">0</strong>
+              </div>
+              <div>
+                <span>Badges</span>
+                <strong id="badgeCount">0</strong>
+              </div>
+            </div>
+
+            <p class="status-line" id="statusLine" aria-live="polite">Generate today&#39;s number and see which badges it unlocks.</p>
+            <div class="roll-actions">
+              <button class="secondary-button" id="shareButton" type="button" disabled>Share</button>
+              <button class="secondary-button" id="replayButton" type="button" disabled>Replay</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-grid">
+          <section class="result-panel" aria-label="badges collected">
+            <div class="panel-heading">
+              <div>
+                <p class="micro-label">Scoring badges</p>
+                <h2>Your roll breakdown</h2>
+              </div>
+              <span id="percentileText">Waiting for roll</span>
+            </div>
+            <div class="badge-list empty" id="badgeList">
+              <p>Generate a number to reveal every matching badge.</p>
+            </div>
+          </section>
+
+          <aside class="result-panel side-panel" aria-label="game details">
+            <div class="panel-heading compact">
+              <div>
+                <p class="micro-label">Daily reset</p>
+                <h2 id="countdown">--h --m --s</h2>
+              </div>
+            </div>
+            <div class="rules-list">
+              <p><strong>Range:</strong> 0 to 1,000,000 inclusive.</p>
+              <p><strong>Scoring:</strong> each matched badge adds EP; badge families score only their best member.</p>
+              <p><strong>Rarity:</strong> higher EP means a rarer roll.</p>
+              <p><strong>Daily mode:</strong> one saved roll per UTC day in this static version.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+
+      <section class="seo-content faq-accordion" aria-label="frequently asked questions about RNGdle">
+        <h2>FAQ</h2>
+        <details class="faq-item">
+          <summary><h2>What is RNGdle?</h2></summary>
+          <div class="faq-body">
+        <p>RNGdle is a daily random number game inspired by the thrill of one clean roll. Each day, the player generates a number from 0 to 1,000,000 and the game scans it for patterns such as primes, palindromes, repeated digits, lucky sevens, clean endings, and special number references.</p>
+        <p>The fun comes from turning pure randomness into a scorecard. A plain number can still earn common badges, while rare coincidences such as exact special numbers, long repeated runs, or unusual mathematical properties can produce huge EP swings.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary><h2>How does scoring work?</h2></summary>
+          <div class="faq-body">
+        <p>Every matched badge has an EP value. Common badges such as Even, Odd, Pair, or Six Digits add small amounts, while rare badges such as Jackpot, Leet, Exact Nice, or six repeated sevens are worth dramatically more.</p>
+        <p>Some badges belong to the same family. In those cases, only the strongest badge in that family contributes EP, while the rest still appear as supporting discoveries. This keeps one lucky pattern from double-counting too aggressively.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary><h2>Is this version daily?</h2></summary>
+          <div class="faq-body">
+        <p>Yes. This static version stores one roll per UTC day in the browser using localStorage. The next roll becomes available after the UTC midnight countdown reaches zero.</p>
+        <p>Because this is a static remake, the roll history, lifetime EP, and daily lock live on the current device. There are no accounts, server rankings, or shared backend data in this project.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary><h2>What is different from the live RNGdle site?</h2></summary>
+          <div class="faq-body">
+        <p>The core gameplay loop is reproduced: generate a daily number, reveal badges, calculate EP, estimate rarity, and share the result.</p>
+        <p>Live-site features that require a backend, such as authenticated profiles, global leaderboards, hearts, friend feeds, and server-issued claim tokens, are intentionally represented as local-only behavior here.</p>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <script>
+      window.GAME_SITE_CONFIG = {
+  "siteName": "RNGdle",
+  "game": {
+    "dataUrl": "/data/game-data.json",
+    "localStorageKey": "rngdle_static_roll",
+    "question": "Generate today's number and see which badges it unlocks."
+  }
+};
+    </script>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
