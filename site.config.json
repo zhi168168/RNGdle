@@ -2,15 +2,15 @@
   "site": {
     "name": "RNGdle",
     "shortName": "RNGdle",
-    "domain": "https://www.rngdle.com",
+    "domain": "https://www.rngdle.org",
     "language": "en",
     "locale": "en_US",
     "description": "Play RNGdle, a daily random number game where one roll earns pattern badges and EP.",
     "datePublished": "2026-07-26",
     "dateModified": "2026-07-26",
     "gaId": "",
-    "contactEmail": "hello@rngdle.com",
-    "reportEmail": "report@rngdle.com",
+    "contactEmail": "hello@rngdle.org",
+    "reportEmail": "report@rngdle.org",
     "themeColor": "#0d0d0b",
     "backgroundColor": "#0d0d0b"
   },

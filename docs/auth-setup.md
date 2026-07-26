@@ -63,7 +63,7 @@ Email/password registration is handled by Supabase Auth:
 By default, Supabase sends auth emails through its built-in email service. For production, configure custom SMTP in Supabase if you want the messages to come from a domain email such as:
 
 ```text
-hello@rngdle.com
+hello@rngdle.org
 ```
 
 ## Required Supabase Dashboard Settings
@@ -71,14 +71,14 @@ hello@rngdle.com
 In Supabase, check:
 
 - Authentication > Providers > Email: enable Email provider.
-- Authentication > URL Configuration > Site URL: set the production URL, for example `https://www.rngdle.com`.
+- Authentication > URL Configuration > Site URL: set the production URL, for example `https://www.rngdle.org`.
 - Authentication > URL Configuration > Redirect URLs: add local and production URLs:
 
 ```text
 http://localhost:5173
 http://localhost:5174
-https://www.rngdle.com
-https://rngdle.com
+https://www.rngdle.org
+https://rngdle.org
 ```
 
 For Google login, also enable Authentication > Providers > Google and add the OAuth credentials there. If Google is not configured, email/password sign-up still works.
