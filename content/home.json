@@ -9,20 +9,28 @@
       "title": "What is RNGdle?",
       "subtitle": "Unused",
       "paragraphs": [
-        "RNGdle is a daily random number game inspired by the thrill of one clean roll. Each day, the player generates a number from 0 to 1,000,000 and the game scans it for patterns such as primes, palindromes, repeated digits, lucky sevens, clean endings, and special number references.",
-        "The fun comes from turning pure randomness into a scorecard. A plain number can still earn common badges, while rare coincidences such as exact special numbers, long repeated runs, or unusual mathematical properties can produce huge EP swings."
+        "RNGdle is a daily random number game inspired by the thrill of one clean roll. Each day, the player generates a number from 0 to 1,000,000 and RNGdle scans it for patterns such as primes, palindromes, repeated digits, lucky sevens, clean endings, and special number references.",
+        "The fun comes from turning pure randomness into a scorecard. A plain number can still earn common badges, while rare RNGdle moments such as exact special numbers, long repeated runs, or unusual mathematical properties can produce huge EP swings."
       ]
     },
     {
-      "title": "How does scoring work?",
+      "title": "How does RNGdle scoring work?",
       "subtitle": "Unused",
       "paragraphs": [
         "Every matched badge has an EP value. Common badges such as Even, Odd, Pair, or Six Digits add small amounts, while rare badges such as Jackpot, Leet, Exact Nice, or six repeated sevens are worth dramatically more.",
-        "Some badges belong to the same family. In those cases, only the strongest badge in that family contributes EP, while the rest still appear as supporting discoveries. This keeps one lucky pattern from double-counting too aggressively."
+        "Some RNGdle badges belong to the same family. In those cases, only the strongest badge in that family contributes EP, while the rest still appear as supporting discoveries. This keeps one lucky pattern from double-counting too aggressively."
       ]
     },
     {
-      "title": "Is this version daily?",
+      "title": "How do you play RNGdle?",
+      "subtitle": "Unused",
+      "paragraphs": [
+        "Open RNGdle, roll once, and watch the result break into badges, rarity notes, and EP. The game is quick by design, so the daily challenge feels more like checking a curious number than grinding a long session.",
+        "After the result appears, RNGdle gives you a shareable summary with the rolled number and the most interesting badges it unlocked."
+      ]
+    },
+    {
+      "title": "Is RNGdle a daily game?",
       "subtitle": "Unused",
       "paragraphs": [
         "Yes. This static version stores one roll per UTC day in the browser using localStorage. The next roll becomes available after the UTC midnight countdown reaches zero.",
