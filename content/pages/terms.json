@@ -16,7 +16,7 @@
       "heading": "Fair play",
       "paragraphs": [
         "The daily roll is stored locally on the player's device. Clearing browser data can reset local progress, so local scores should be treated as personal play records rather than authoritative competition data.",
-        "Any future online leaderboard or account system would need separate server-side validation and updated terms."
+        "Accounts are provided for sign-in convenience. Any future online leaderboard or server-verified score system would need separate server-side validation and updated terms."
       ]
     },
     {

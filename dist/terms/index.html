@@ -53,6 +53,12 @@
           <a href="/privacy/">Privacy</a>
           <a class="nav-active" href="/terms/" aria-current="page">Terms</a>
         </div>
+        <div class="account-menu" aria-label="account">
+          <span class="account-name hidden" id="accountName"></span>
+          <button class="nav-auth-button nav-auth-login hidden" id="authButton" type="button">Log in</button>
+          <button class="nav-auth-button nav-auth-signup hidden" id="signUpButton" type="button">Sign up</button>
+          <button class="nav-auth-button nav-auth-signout hidden" id="signOutButton" type="button">Sign out</button>
+        </div>
       </nav>
     </header>
     <main class="content-shell">
@@ -65,7 +71,7 @@
 
         <h2>Fair play</h2>
         <p>The daily roll is stored locally on the player's device. Clearing browser data can reset local progress, so local scores should be treated as personal play records rather than authoritative competition data.</p>
-        <p>Any future online leaderboard or account system would need separate server-side validation and updated terms.</p>
+        <p>Accounts are provided for sign-in convenience. Any future online leaderboard or server-verified score system would need separate server-side validation and updated terms.</p>
 
         <h2>Contact</h2>
         <p>Questions or reports can be sent to <a href="mailto:report@rngdle.com">report@rngdle.com</a>.</p>
@@ -73,5 +79,12 @@
         <p class="content-cta"><a href="/">Play RNGdle</a></p>
       </article>
     </main>
+    <script>
+      window.RNGDLE_SUPABASE_CONFIG = {
+  "url": "",
+  "anonKey": ""
+};
+    </script>
+    <script src="/nav-auth.js" type="module"></script>
   </body>
 </html>

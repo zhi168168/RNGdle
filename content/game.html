@@ -69,4 +69,38 @@
             </div>
           </aside>
         </div>
+
+        <div class="auth-modal" id="authDialog" hidden>
+          <div class="auth-modal-backdrop" data-auth-close></div>
+          <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button class="auth-modal-close" id="authClose" type="button" aria-label="Close sign in dialog">&times;</button>
+            <p class="auth-modal-eyebrow">Account</p>
+            <h3 class="auth-modal-title" id="authTitle">Sign in</h3>
+            <button class="google-auth-button" id="googleAuthButton" type="button">
+              <span class="google-mark" aria-hidden="true">G</span>
+              <span>Continue with Google</span>
+            </button>
+            <div class="auth-divider"><span>or</span></div>
+            <form class="auth-form" id="authForm">
+              <label>
+                <span>Email</span>
+                <input id="authEmail" type="email" autocomplete="email" required>
+              </label>
+              <label>
+                <span>Password</span>
+                <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required>
+              </label>
+              <label id="authDisplayField" class="hidden">
+                <span>Display name</span>
+                <input id="authDisplayName" type="text" maxlength="24" autocomplete="nickname">
+              </label>
+              <button class="generate-button auth-submit" id="authSubmit" type="submit">Sign in</button>
+            </form>
+            <p class="auth-message" id="authMessage" aria-live="polite"></p>
+            <div class="auth-actions">
+              <button class="secondary-button" id="authSwitch" type="button">Create account</button>
+              <button class="secondary-button" id="authReset" type="button">Reset password</button>
+            </div>
+          </div>
+        </div>
       </section>

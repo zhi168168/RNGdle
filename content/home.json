@@ -26,7 +26,7 @@
       "subtitle": "Unused",
       "paragraphs": [
         "Yes. This static version stores one roll per UTC day in the browser using localStorage. The next roll becomes available after the UTC midnight countdown reaches zero.",
-        "Because this is a static remake, the roll history, lifetime EP, and daily lock live on the current device. There are no accounts, server rankings, or shared backend data in this project."
+        "Accounts are available for signing in across visits, while roll history, lifetime EP, and the daily lock still live on the current device."
       ]
     },
     {
@@ -34,7 +34,7 @@
       "subtitle": "Unused",
       "paragraphs": [
         "The core gameplay loop is reproduced: generate a daily number, reveal badges, calculate EP, estimate rarity, and share the result.",
-        "Live-site features that require a backend, such as authenticated profiles, global leaderboards, hearts, friend feeds, and server-issued claim tokens, are intentionally represented as local-only behavior here."
+        "This version includes authenticated profiles, but global leaderboards, hearts, friend feeds, and server-issued claim tokens are still represented as local-only behavior here."
       ]
     }
   ]

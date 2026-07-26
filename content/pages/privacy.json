@@ -15,8 +15,8 @@
     {
       "heading": "Accounts and server data",
       "paragraphs": [
-        "This remake does not create accounts, collect usernames, run a global leaderboard, or upload roll results to a backend service.",
-        "If analytics, ads, accounts, or server storage are added later, this policy should be updated before publishing those changes."
+        "RNGdle uses Supabase for optional account authentication. If you create an account, Supabase stores the email address used for sign-in and the display name you provide.",
+        "RNGdle does not currently upload roll results, run a global leaderboard, or publish user profiles. Gameplay scores remain local to the browser."
       ]
     },
     {

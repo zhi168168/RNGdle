@@ -1,3 +1,5 @@
+import { hasSupabaseConfig, supabase } from "./supabase-client.js";
+
 const runtime = window.GAME_SITE_CONFIG || {};
 const gameConfig = runtime.game || {};
 const storagePrefix = gameConfig.localStorageKey || "rngdle_static";
@@ -16,7 +18,24 @@ const elements = {
   replayButton: document.querySelector("#replayButton"),
   badgeList: document.querySelector("#badgeList"),
   percentileText: document.querySelector("#percentileText"),
-  countdown: document.querySelector("#countdown")
+  countdown: document.querySelector("#countdown"),
+  authButton: document.querySelector("#authButton"),
+  signUpButton: document.querySelector("#signUpButton"),
+  signOutButton: document.querySelector("#signOutButton"),
+  accountName: document.querySelector("#accountName"),
+  authDialog: document.querySelector("#authDialog"),
+  googleAuthButton: document.querySelector("#googleAuthButton"),
+  authForm: document.querySelector("#authForm"),
+  authTitle: document.querySelector("#authTitle"),
+  authEmail: document.querySelector("#authEmail"),
+  authPassword: document.querySelector("#authPassword"),
+  authDisplayName: document.querySelector("#authDisplayName"),
+  authDisplayField: document.querySelector("#authDisplayField"),
+  authSubmit: document.querySelector("#authSubmit"),
+  authSwitch: document.querySelector("#authSwitch"),
+  authReset: document.querySelector("#authReset"),
+  authMessage: document.querySelector("#authMessage"),
+  authClose: document.querySelector("#authClose")
 };
 
 const families = {
@@ -105,11 +124,241 @@ const badgeDefinitions = [
 const state = {
   result: null,
   lifetime: Number(localStorage.getItem(lifetimeStorageKey) || 0),
-  isRolling: false
+  isRolling: false,
+  authMode: "sign-in",
+  session: null,
+  profile: null,
+  authReady: false
 };
 
 function badge(id, label, description, emoji, score, probability, check, family = null) {
   return { id, label, description, emoji, score, probability, check, family };
+}
+
+function displayNameFromEmail(email = "") {
+  return email.split("@")[0]?.slice(0, 24) || "Player";
+}
+
+function activeUser() {
+  return state.session?.user || null;
+}
+
+function metadataDisplayName(user = activeUser()) {
+  const value = user?.user_metadata?.display_name || user?.user_metadata?.full_name || user?.user_metadata?.name;
+  return typeof value === "string" && value.trim() ? value.trim().slice(0, 24) : "";
+}
+
+function userDisplayName() {
+  return state.profile?.display_name || metadataDisplayName() || displayNameFromEmail(activeUser()?.email);
+}
+
+function setAuthMessage(message, tone = "") {
+  if (!elements.authMessage) return;
+  elements.authMessage.textContent = message;
+  elements.authMessage.dataset.tone = tone;
+}
+
+function authCallbackState() {
+  const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const search = new URLSearchParams(window.location.search);
+  return {
+    hasTokens: Boolean(hash.get("access_token") || search.get("code")),
+    error: hash.get("error_description") || search.get("error_description") || "",
+    verified: search.get("type") === "signup" || hash.get("type") === "signup"
+  };
+}
+
+function syncAuthUi() {
+  const user = activeUser();
+  if (!elements.accountName || !elements.authButton || !elements.signUpButton || !elements.signOutButton) return;
+  elements.accountName.textContent = user ? userDisplayName() : "";
+  elements.accountName.classList.toggle("hidden", !user);
+  elements.authButton.classList.toggle("hidden", Boolean(user));
+  elements.signUpButton.classList.toggle("hidden", Boolean(user));
+  elements.signOutButton.classList.toggle("hidden", !user);
+}
+
+function syncAuthMode() {
+  const signingUp = state.authMode === "sign-up";
+  elements.authTitle.textContent = signingUp ? "Create account" : "Log in";
+  elements.authSubmit.textContent = signingUp ? "Create account" : "Log in";
+  elements.authSwitch.textContent = signingUp ? "I already have an account" : "Create account";
+  elements.authDisplayField.classList.toggle("hidden", !signingUp);
+  elements.authPassword.autocomplete = signingUp ? "new-password" : "current-password";
+  setAuthMessage("");
+}
+
+function openAuthDialog(mode = "sign-in") {
+  if (!hasSupabaseConfig) return;
+  state.authMode = mode;
+  syncAuthMode();
+  elements.authDialog.hidden = false;
+  requestAnimationFrame(() => elements.authDialog.classList.add("is-open"));
+  elements.authEmail.focus();
+}
+
+function closeAuthDialog() {
+  elements.authDialog.classList.remove("is-open");
+  elements.authDialog.hidden = true;
+}
+
+async function loadProfile() {
+  const user = activeUser();
+  if (!user) {
+    state.profile = null;
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, display_name, username")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    state.profile = null;
+    return;
+  }
+
+  if (data) {
+    const metadataName = metadataDisplayName(user);
+    const emailName = displayNameFromEmail(user.email);
+    if (metadataName && (!data.display_name || data.display_name === emailName)) {
+      const { data: updated } = await supabase
+        .from("profiles")
+        .update({ display_name: metadataName })
+        .eq("id", user.id)
+        .select("id, display_name, username")
+        .maybeSingle();
+      state.profile = updated || { ...data, display_name: metadataName };
+      return;
+    }
+    state.profile = data;
+    return;
+  }
+
+  const displayName = metadataDisplayName(user) || displayNameFromEmail(user.email);
+  const { data: inserted } = await supabase
+    .from("profiles")
+    .insert({ id: user.id, display_name: displayName, username: null })
+    .select("id, display_name, username")
+    .maybeSingle();
+  state.profile = inserted || { id: user.id, display_name: displayName, username: null };
+}
+
+async function initAuth() {
+  if (!hasSupabaseConfig) return;
+  const callback = authCallbackState();
+  const { data } = await supabase.auth.getSession();
+  state.session = data.session;
+  await loadProfile();
+  state.authReady = true;
+  syncAuthUi();
+
+  if (!state.session && (callback.hasTokens || callback.verified)) {
+    openAuthDialog("sign-in");
+    setAuthMessage("Email confirmed. Sign in to continue.", "good");
+  }
+  if (callback.error) {
+    openAuthDialog("sign-in");
+    setAuthMessage(callback.error, "bad");
+  }
+
+  supabase.auth.onAuthStateChange(async (_event, session) => {
+    state.session = session;
+    await loadProfile();
+    syncAuthUi();
+  });
+}
+
+async function handleAuthSubmit(event) {
+  event.preventDefault();
+  if (!hasSupabaseConfig) return;
+  const email = elements.authEmail.value.trim();
+  const password = elements.authPassword.value;
+  const displayName = elements.authDisplayName.value.trim() || displayNameFromEmail(email);
+  elements.authSubmit.disabled = true;
+  setAuthMessage(state.authMode === "sign-up" ? "Creating account..." : "Signing in...");
+
+  try {
+    const result = state.authMode === "sign-up"
+      ? await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: window.location.origin,
+            data: { display_name: displayName }
+          }
+        })
+      : await supabase.auth.signInWithPassword({ email, password });
+
+    if (result.error) throw result.error;
+
+    if (state.authMode === "sign-up" && result.data.user) {
+      await supabase.from("profiles").upsert({
+        id: result.data.user.id,
+        display_name: displayName.slice(0, 24),
+        username: null
+      });
+    }
+
+    if (state.authMode === "sign-up" && !result.data.session) {
+      state.authMode = "sign-in";
+      syncAuthMode();
+      setAuthMessage("Check your email, confirm the address, then sign in here.", "good");
+      elements.authEmail.value = email;
+      elements.authPassword.value = "";
+      elements.authPassword.focus();
+      return;
+    }
+
+    setAuthMessage("You are signed in.", "good");
+    closeAuthDialog();
+    elements.authForm.reset();
+  } catch (error) {
+    setAuthMessage(error.message || "Could not sign in.", "bad");
+  } finally {
+    elements.authSubmit.disabled = false;
+  }
+}
+
+async function signInWithGoogle() {
+  if (!hasSupabaseConfig) return;
+  elements.googleAuthButton.disabled = true;
+  setAuthMessage("Opening Google...");
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin
+    }
+  });
+  if (error) {
+    elements.googleAuthButton.disabled = false;
+    setAuthMessage(error.message || "Google sign-in is unavailable.", "bad");
+  }
+}
+
+async function resetPassword() {
+  if (!hasSupabaseConfig) return;
+  const email = elements.authEmail.value.trim();
+  if (!email) {
+    setAuthMessage("Enter your email first.", "bad");
+    elements.authEmail.focus();
+    return;
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin
+  });
+  setAuthMessage(error ? error.message : "Password reset email sent.", error ? "bad" : "good");
+}
+
+async function signOut() {
+  if (!hasSupabaseConfig) return;
+  await supabase.auth.signOut();
+  state.session = null;
+  state.profile = null;
+  syncAuthUi();
 }
 
 function todayUTC() {
@@ -432,8 +681,30 @@ function hasOneOddDigitOut(text) {
 elements.generateButton.addEventListener("click", handleGenerate);
 elements.replayButton.addEventListener("click", replayRoll);
 elements.shareButton.addEventListener("click", shareRoll);
+elements.authButton.addEventListener("click", () => openAuthDialog("sign-in"));
+elements.signUpButton.addEventListener("click", () => openAuthDialog("sign-up"));
+elements.signOutButton.addEventListener("click", signOut);
+elements.googleAuthButton.addEventListener("click", signInWithGoogle);
+elements.authForm.addEventListener("submit", handleAuthSubmit);
+elements.authSwitch.addEventListener("click", () => {
+  state.authMode = state.authMode === "sign-in" ? "sign-up" : "sign-in";
+  syncAuthMode();
+});
+elements.authReset.addEventListener("click", resetPassword);
+elements.authClose.addEventListener("click", closeAuthDialog);
+document.querySelectorAll("[data-auth-close]").forEach((el) => {
+  el.addEventListener("click", closeAuthDialog);
+});
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !elements.authDialog.hidden) closeAuthDialog();
+});
 
 state.result = getStoredRoll();
 render();
 tickCountdown();
 setInterval(tickCountdown, 1000);
+initAuth().catch(() => {
+  state.session = null;
+  state.profile = null;
+  syncAuthUi();
+});

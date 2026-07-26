@@ -53,6 +53,12 @@
           <a class="nav-active" href="/privacy/" aria-current="page">Privacy</a>
           <a href="/terms/">Terms</a>
         </div>
+        <div class="account-menu" aria-label="account">
+          <span class="account-name hidden" id="accountName"></span>
+          <button class="nav-auth-button nav-auth-login hidden" id="authButton" type="button">Log in</button>
+          <button class="nav-auth-button nav-auth-signup hidden" id="signUpButton" type="button">Sign up</button>
+          <button class="nav-auth-button nav-auth-signout hidden" id="signOutButton" type="button">Sign out</button>
+        </div>
       </nav>
     </header>
     <main class="content-shell">
@@ -64,8 +70,8 @@
         <p>This data stays in the browser unless the player clears site data or uses the share button to copy or share a roll summary.</p>
 
         <h2>Accounts and server data</h2>
-        <p>This remake does not create accounts, collect usernames, run a global leaderboard, or upload roll results to a backend service.</p>
-        <p>If analytics, ads, accounts, or server storage are added later, this policy should be updated before publishing those changes.</p>
+        <p>RNGdle uses Supabase for optional account authentication. If you create an account, Supabase stores the email address used for sign-in and the display name you provide.</p>
+        <p>RNGdle does not currently upload roll results, run a global leaderboard, or publish user profiles. Gameplay scores remain local to the browser.</p>
 
         <h2>Contact</h2>
         <p>Questions about privacy can be sent to <a href="mailto:hello@rngdle.com">hello@rngdle.com</a>.</p>
@@ -73,5 +79,12 @@
         <p class="content-cta"><a href="/">Play RNGdle</a></p>
       </article>
     </main>
+    <script>
+      window.RNGDLE_SUPABASE_CONFIG = {
+  "url": "",
+  "anonKey": ""
+};
+    </script>
+    <script src="/nav-auth.js" type="module"></script>
   </body>
 </html>

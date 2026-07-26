@@ -53,6 +53,12 @@
           <a href="/privacy/">Privacy</a>
           <a href="/terms/">Terms</a>
         </div>
+        <div class="account-menu" aria-label="account">
+          <span class="account-name hidden" id="accountName"></span>
+          <button class="nav-auth-button nav-auth-login hidden" id="authButton" type="button">Log in</button>
+          <button class="nav-auth-button nav-auth-signup hidden" id="signUpButton" type="button">Sign up</button>
+          <button class="nav-auth-button nav-auth-signout hidden" id="signOutButton" type="button">Sign out</button>
+        </div>
       </nav>
     </header>
     <main class="content-shell">
@@ -61,14 +67,21 @@
         <p class="content-meta">Reviewed and updated by the RNGdle Editorial Team. 2026-07-26.</p>
         <h2>About RNGdle</h2>
         <p>RNGdle is a compact browser game about making one random number feel meaningful. The game rolls a number, finds numerical patterns, assigns badges, and turns those discoveries into EP.</p>
-        <p>This project is a static remake of the core play experience. It focuses on offline-friendly gameplay, local daily progress, badge scoring, and shareable roll summaries.</p>
+        <p>This project is a static remake of the core play experience. It focuses on account sign-in, local daily progress, badge scoring, and shareable roll summaries.</p>
 
         <h2>What this remake includes</h2>
         <p>The remake includes a daily roll, UTC reset countdown, local lifetime EP, rarity tiers, badge families, and a broad set of number-pattern checks.</p>
-        <p>It does not include live accounts, server leaderboards, social hearts, claim tokens, or friend feeds.</p>
+        <p>It includes live account login and registration, but not server leaderboards, social hearts, claim tokens, or friend feeds.</p>
 
         <p class="content-cta"><a href="/">Play RNGdle</a></p>
       </article>
     </main>
+    <script>
+      window.RNGDLE_SUPABASE_CONFIG = {
+  "url": "",
+  "anonKey": ""
+};
+    </script>
+    <script src="/nav-auth.js" type="module"></script>
   </body>
 </html>

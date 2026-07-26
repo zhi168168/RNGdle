@@ -53,6 +53,12 @@
           <a href="/privacy/">Privacy</a>
           <a href="/terms/">Terms</a>
         </div>
+        <div class="account-menu" aria-label="account">
+          <span class="account-name hidden" id="accountName"></span>
+          <button class="nav-auth-button nav-auth-login hidden" id="authButton" type="button">Log in</button>
+          <button class="nav-auth-button nav-auth-signup hidden" id="signUpButton" type="button">Sign up</button>
+          <button class="nav-auth-button nav-auth-signout hidden" id="signOutButton" type="button">Sign out</button>
+        </div>
       </nav>
     </header>
     <main class="app-shell">
@@ -132,6 +138,40 @@
             </div>
           </aside>
         </div>
+
+        <div class="auth-modal" id="authDialog" hidden>
+          <div class="auth-modal-backdrop" data-auth-close></div>
+          <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button class="auth-modal-close" id="authClose" type="button" aria-label="Close sign in dialog">&times;</button>
+            <p class="auth-modal-eyebrow">Account</p>
+            <h3 class="auth-modal-title" id="authTitle">Sign in</h3>
+            <button class="google-auth-button" id="googleAuthButton" type="button">
+              <span class="google-mark" aria-hidden="true">G</span>
+              <span>Continue with Google</span>
+            </button>
+            <div class="auth-divider"><span>or</span></div>
+            <form class="auth-form" id="authForm">
+              <label>
+                <span>Email</span>
+                <input id="authEmail" type="email" autocomplete="email" required>
+              </label>
+              <label>
+                <span>Password</span>
+                <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required>
+              </label>
+              <label id="authDisplayField" class="hidden">
+                <span>Display name</span>
+                <input id="authDisplayName" type="text" maxlength="24" autocomplete="nickname">
+              </label>
+              <button class="generate-button auth-submit" id="authSubmit" type="submit">Sign in</button>
+            </form>
+            <p class="auth-message" id="authMessage" aria-live="polite"></p>
+            <div class="auth-actions">
+              <button class="secondary-button" id="authSwitch" type="button">Create account</button>
+              <button class="secondary-button" id="authReset" type="button">Reset password</button>
+            </div>
+          </div>
+        </div>
       </section>
 
 
@@ -157,7 +197,7 @@
           <summary><h2>Is this version daily?</h2></summary>
           <div class="faq-body">
         <p>Yes. This static version stores one roll per UTC day in the browser using localStorage. The next roll becomes available after the UTC midnight countdown reaches zero.</p>
-        <p>Because this is a static remake, the roll history, lifetime EP, and daily lock live on the current device. There are no accounts, server rankings, or shared backend data in this project.</p>
+        <p>Accounts are available for signing in across visits, while roll history, lifetime EP, and the daily lock still live on the current device.</p>
           </div>
         </details>
 
@@ -165,7 +205,7 @@
           <summary><h2>What is different from the live RNGdle site?</h2></summary>
           <div class="faq-body">
         <p>The core gameplay loop is reproduced: generate a daily number, reveal badges, calculate EP, estimate rarity, and share the result.</p>
-        <p>Live-site features that require a backend, such as authenticated profiles, global leaderboards, hearts, friend feeds, and server-issued claim tokens, are intentionally represented as local-only behavior here.</p>
+        <p>This version includes authenticated profiles, but global leaderboards, hearts, friend feeds, and server-issued claim tokens are still represented as local-only behavior here.</p>
           </div>
         </details>
       </section>
@@ -179,6 +219,12 @@
     "localStorageKey": "rngdle_static_roll",
     "question": "Generate today's number and see which badges it unlocks."
   }
+};
+    </script>
+    <script>
+      window.RNGDLE_SUPABASE_CONFIG = {
+  "url": "",
+  "anonKey": ""
 };
     </script>
     <script src="/app.js" type="module"></script>

@@ -50,6 +50,21 @@ function renderAnalytics(gaId) {
 `;
 }
 
+function readSupabaseConfig() {
+  return {
+    url: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "",
+    anonKey: process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || ""
+  };
+}
+
+function renderSupabaseConfigScript() {
+  const supabaseConfig = readSupabaseConfig();
+  return `    <script>
+      window.RNGDLE_SUPABASE_CONFIG = ${safeJson(supabaseConfig)};
+    </script>
+`;
+}
+
 function renderSchema(config, page, path, kind) {
   const base = {
     "@context": "https://schema.org",
@@ -150,6 +165,12 @@ function renderNav(config, activeKey) {
         <div class="nav-links">
 ${links}
         </div>
+        <div class="account-menu" aria-label="account">
+          <span class="account-name hidden" id="accountName"></span>
+          <button class="nav-auth-button nav-auth-login hidden" id="authButton" type="button">Log in</button>
+          <button class="nav-auth-button nav-auth-signup hidden" id="signUpButton" type="button">Sign up</button>
+          <button class="nav-auth-button nav-auth-signout hidden" id="signOutButton" type="button">Sign out</button>
+        </div>
       </nav>
     </header>`;
 }
@@ -213,7 +234,7 @@ ${faqBlocks}
     <script>
       window.GAME_SITE_CONFIG = ${safeJson(runtime)};
     </script>
-    <script src="/app.js" type="module"></script>
+${renderSupabaseConfigScript()}    <script src="/app.js" type="module"></script>
   </body>
 </html>
 `;
@@ -242,6 +263,7 @@ ${body}
 ${cta}
       </article>
     </main>
+${renderSupabaseConfigScript()}    <script src="/nav-auth.js" type="module"></script>
   </body>
 </html>
 `;
