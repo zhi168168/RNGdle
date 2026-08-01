@@ -118,6 +118,26 @@ Sender email: no-reply@rngdle.org
 Sender name: RNGdle
 ```
 
+For Brevo, use:
+
+```text
+Host: smtp-relay.brevo.com
+Port: 587
+Username: Brevo Transactional > SMTP settings > Login
+Password: Brevo Transactional > SMTP settings > Password
+Sender email: no-reply@rngdle.org
+Sender name: RNGdle
+```
+
+If Supabase returns `Error sending confirmation email`, check these first:
+
+1. `no-reply@rngdle.org` is verified in Brevo as a sender or under a verified domain.
+2. Supabase SMTP `Username` exactly matches the Brevo SMTP Login, not your Brevo account email.
+3. Supabase SMTP `Password` exactly matches the Brevo SMTP Password or SMTP key, not your Brevo login password.
+4. Host is `smtp-relay.brevo.com`.
+5. Port is `587`.
+6. The exposed Brevo SMTP password has been rotated if it was shared in a screenshot.
+
 Do not put SMTP username/password in Vercel frontend environment variables or frontend JavaScript. SMTP credentials belong only in Supabase's Auth SMTP settings or another trusted server-side system.
 
 After saving SMTP settings, test:

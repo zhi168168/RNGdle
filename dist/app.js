@@ -158,6 +158,20 @@ function setAuthMessage(message, tone = "") {
   elements.authMessage.dataset.tone = tone;
 }
 
+function formatAuthError(error, fallback = "Could not sign in.") {
+  const message = String(error?.message || error?.msg || error?.error_description || "").trim();
+  const code = String(error?.error_code || error?.code || error?.name || "").trim();
+  const combined = `${message} ${code}`.toLowerCase();
+
+  if (combined.includes("error sending confirmation email") || combined.includes("unexpected_failure")) {
+    return "Could not send the confirmation email. Check the Supabase SMTP sender, host, port, username, and password.";
+  }
+
+  if (message && message !== "{}") return message;
+  if (code && code !== "{}") return code;
+  return fallback;
+}
+
 function authCallbackState() {
   const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
   const search = new URLSearchParams(window.location.search);
@@ -316,7 +330,7 @@ async function handleAuthSubmit(event) {
     closeAuthDialog();
     elements.authForm.reset();
   } catch (error) {
-    setAuthMessage(error.message || "Could not sign in.", "bad");
+    setAuthMessage(formatAuthError(error, state.authMode === "sign-up" ? "Could not create account." : "Could not sign in."), "bad");
   } finally {
     elements.authSubmit.disabled = false;
   }
