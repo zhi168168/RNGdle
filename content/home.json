@@ -1,9 +1,9 @@
 {
-  "title": "RNGdle - Daily Random Number Game",
-  "description": "Play RNGdle online. Generate one daily number, collect mathematical and meme badges, and score EP from rare digit patterns.",
-  "twitterDescription": "Generate today's RNGdle number and see which badges it unlocks.",
+  "title": "RNGdle - Daily Random Number Game with Badges & EP",
+  "description": "Play RNGdle online. Roll one daily random number, collect pattern badges, score EP, and share rare results from digits, primes, palindromes, and lucky numbers.",
+  "twitterDescription": "Play RNGdle, roll today's number, and see which badges and EP it unlocks.",
   "hiddenH1": "RNGdle",
-  "schemaDescription": "RNGdle is a browser game where each daily random number is analyzed for badges, rarity, and EP.",
+  "schemaDescription": "RNGdle is a free browser game where one daily random number is analyzed for badges, rarity, and EP.",
   "seoSections": [
     {
       "title": "What is RNGdle?",
@@ -30,6 +30,14 @@
       ]
     },
     {
+      "title": "What RNGdle badges can you get?",
+      "subtitle": "Unused",
+      "paragraphs": [
+        "RNGdle badges cover both math patterns and number-culture references. A roll may unlock badges for primes, palindromes, repeated digits, clean endings, lucky sevens, six-digit numbers, or exact values such as 69, 420, and 1337.",
+        "Badge families keep scoring readable. If several related RNGdle badges match the same number, the result can show the supporting discoveries while scoring only the strongest badge in that family."
+      ]
+    },
+    {
       "title": "Is RNGdle a daily game?",
       "subtitle": "Unused",
       "paragraphs": [
@@ -38,7 +46,7 @@
       ]
     },
     {
-      "title": "What is different from the live RNGdle site?",
+      "title": "What features are local in this RNGdle version?",
       "subtitle": "Unused",
       "paragraphs": [
         "The core gameplay loop is reproduced: generate a daily number, reveal badges, calculate EP, estimate rarity, and share the result.",

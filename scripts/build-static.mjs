@@ -34,6 +34,12 @@ function absoluteUrl(config, path = "/") {
   return `${trimSlash(config.site.domain)}${cleanPath}`;
 }
 
+function mediaUrl(config, value) {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return absoluteUrl(config, value.startsWith("/") ? value : `/${value}`);
+}
+
 function pageHref(slug) {
   return slug === "index" ? "/" : `/${slug}/`;
 }
@@ -129,13 +135,30 @@ function renderHead(config, page, path, schemaType) {
   const title = page.title || config.site.name;
   const description = page.description || config.site.description;
   const canonical = absoluteUrl(config, path);
-  const schema = renderSchema(config, page, path, schemaType);
+  const schemas = [renderSchema(config, page, path, schemaType)];
+  if (schemaType === "WebApplication" && page.seoSections?.length) {
+    schemas.push(renderSchema(config, {
+      title: `${config.site.name} FAQ`,
+      questions: page.seoSections.map((section) => ({
+        question: section.title,
+        answer: (section.paragraphs || []).join(" ")
+      }))
+    }, path, "FAQPage"));
+  }
+  const schema = schemas.length === 1 ? schemas[0] : schemas;
+  const image = mediaUrl(config, page.ogImage || config.site.ogImage);
+  const imageAlt = page.ogImageAlt || config.site.ogImageAlt || `${config.site.name} preview`;
+  const imageMeta = image ? `    <meta property="og:image" content="${escapeHtml(image)}">
+    <meta property="og:image:alt" content="${escapeHtml(imageAlt)}">
+    <meta name="twitter:image" content="${escapeHtml(image)}">
+` : "";
 
   return `  <head>
 ${renderAnalytics(config.site.gaId)}    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="${escapeHtml(config.site.themeColor)}">
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}">
     <meta name="robots" content="index, follow">
@@ -146,7 +169,7 @@ ${renderAnalytics(config.site.gaId)}    <link rel="icon" type="image/svg+xml" hr
     <meta property="og:type" content="${schemaType === "WebApplication" ? "website" : "article"}">
     <meta property="og:site_name" content="${escapeHtml(config.site.name)}">
     <meta property="og:locale" content="${escapeHtml(config.site.locale)}">
-    <meta name="twitter:card" content="summary">
+${imageMeta}    <meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}">
     <meta name="twitter:title" content="${escapeHtml(title)}">
     <meta name="twitter:description" content="${escapeHtml(page.twitterDescription || description)}">
     <link rel="stylesheet" href="/styles.css">
@@ -225,7 +248,6 @@ ${renderHead(config, home, "/", "WebApplication")}
   <body>
 ${renderNav(config, "play")}
     <main class="app-shell">
-      <h1 class="sr-only">${escapeHtml(home.hiddenH1 || config.site.name)}</h1>
       <header class="topbar">
         <p>${escapeHtml(config.game.question)}</p>
       </header>
