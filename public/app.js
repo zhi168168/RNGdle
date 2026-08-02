@@ -698,7 +698,7 @@ elements.shareButton.addEventListener("click", shareRoll);
 elements.authButton.addEventListener("click", () => openAuthDialog("sign-in"));
 elements.signUpButton.addEventListener("click", () => openAuthDialog("sign-up"));
 elements.signOutButton.addEventListener("click", signOut);
-elements.googleAuthButton.addEventListener("click", signInWithGoogle);
+elements.googleAuthButton?.addEventListener("click", signInWithGoogle);
 elements.authForm.addEventListener("submit", handleAuthSubmit);
 elements.authSwitch.addEventListener("click", () => {
   state.authMode = state.authMode === "sign-in" ? "sign-up" : "sign-in";
