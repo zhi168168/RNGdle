@@ -23,7 +23,6 @@
 }
 
 html {
-  min-width: 320px;
   background: var(--bg);
 }
 
@@ -936,7 +935,7 @@ button:disabled {
 
   .nav-auth-button {
     min-width: 74px;
-    min-height: 38px;
+    min-height: 44px;
     padding: 8px 10px;
   }
 
@@ -969,7 +968,7 @@ button:disabled {
   }
 
   .nav-links a {
-    min-height: 42px;
+    min-height: 44px;
     padding: 7px 9px;
     font-size: 0.84rem;
   }
